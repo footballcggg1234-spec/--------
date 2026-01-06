@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>ข่าวสาร - RPK26</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style> @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sarabun:wght@300;400;500&display=swap'); body { font-family: 'Sarabun'; background-color: #F8FAFC; } .font-heading { font-family: 'Prompt'; } .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); }</style>
+</head>
+<body class="antialiased text-slate-800">
+    <nav class="fixed w-full z-50 top-0 glass shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3"><img src="https://www.rpk26.ac.th/images/logo.png" class="h-10" onerror="this.src='https://via.placeholder.com/50'"><h1 class="font-heading font-bold text-lg text-blue-900">RPK 26</h1></div>
+            <div class="hidden md:flex space-x-8 font-medium text-slate-600"><a href="index.html" class="hover:text-blue-600">หน้าแรก</a><a href="about.html" class="hover:text-blue-600">เกี่ยวกับเรา</a><a href="news.html" class="text-blue-600 font-bold">ข่าวสาร</a><a href="personnel.html" class="hover:text-blue-600">บุคลากร</a><a href="admin.html" class="px-6 py-2.5 bg-slate-900 text-white rounded-full hover:bg-blue-700 transition">เข้าสู่ระบบ</a></div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-20 bg-slate-900 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-heading font-bold text-white mb-4">ข่าวประชาสัมพันธ์</h1>
+            <p class="text-blue-200 text-lg">อัปเดตกิจกรรมและความเคลื่อนไหวล่าสุดของโรงเรียน</p>
+        </div>
+    </header>
+
+    <section class="py-20 container mx-auto px-6 min-h-screen">
+        <div class="flex justify-center gap-4 mb-12">
+            <button class="px-6 py-2 bg-blue-600 text-white rounded-full shadow-lg font-bold transition">ทั้งหมด</button>
+            <button class="px-6 py-2 bg-white text-slate-600 border border-slate-200 rounded-full hover:border-blue-600 hover:text-blue-600 transition">กิจกรรม</button>
+            <button class="px-6 py-2 bg-white text-slate-600 border border-slate-200 rounded-full hover:border-blue-600 hover:text-blue-600 transition">วิชาการ</button>
+        </div>
+        <div id="news-container" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <div class="col-span-full text-center py-20 text-slate-400"><i class="fas fa-circle-notch fa-spin fa-2x"></i> กำลังโหลด...</div>
+        </div>
+    </section>
+
+    <script>
+        fetch('/api/news').then(r=>r.json()).then(news=>{
+            const c=document.getElementById('news-container'); if(news.length===0){c.innerHTML='<div class="col-span-full text-center">ไม่พบข่าว</div>';return;}
+            c.innerHTML=news.map(n=>`
+                <article class="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full border border-slate-100 hover:-translate-y-2 group">
+                    <div class="h-48 relative overflow-hidden"><img src="${n.image||'https://via.placeholder.com/400'}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"><span class="absolute top-3 right-3 bg-white/90 text-blue-900 text-xs px-3 py-1 rounded-full font-bold shadow">${n.category}</span></div>
+                    <div class="p-6 flex-1 flex flex-col"><div class="text-xs text-slate-400 mb-2"><i class="far fa-clock"></i> ${new Date(n.date).toLocaleDateString('th-TH')}</div><h3 class="text-lg font-heading font-bold text-slate-800 mb-2 line-clamp-2 group-hover:text-blue-600 transition">${n.title}</h3><p class="text-slate-500 text-sm line-clamp-3 mb-4 flex-1">${n.content}</p><span class="text-blue-600 text-sm font-bold mt-auto">อ่านรายละเอียด &rarr;</span></div>
+                </article>`).join('');
+        });
+    </script>
+</body>
+</html>

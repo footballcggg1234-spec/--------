@@ -1,200 +1,170 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+    <title>โรงเรียนราชประชานุเคราะห์ ๒๖</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>โรงเรียนราชประชานุเคราะห์ ๒๖ จังหวัดลำพูน</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
-    <script>
-    // ฟังก์ชันดึงข่าวจาก API
-    async function loadNews() {
-        try {
-            const response = await fetch('http://localhost:3000/api/news');
-            const newsList = await response.json();
-            
-            const newsContainer = document.querySelector('.grid'); // หา container ของข่าว
-            
-            // ถ้ามีข่าว ให้เคลียร์ของเก่าออกก่อน
-            if(newsList.length > 0) {
-                newsContainer.innerHTML = ''; 
-            }
-
-            newsList.forEach(news => {
-                // แปลงวันที่ให้สวยงาม
-                const date = new Date(news.date).toLocaleDateString('th-TH', {
-                    year: 'numeric', month: 'short', day: 'numeric'
-                });
-
-                // สร้าง HTML ของการ์ดข่าว
-                const newsCard = `
-                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 card-zoom cursor-pointer group">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="${news.image || 'https://via.placeholder.com/400x250'}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                            <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">${news.category}</div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center text-gray-400 text-xs mb-3">
-                                <i class="far fa-calendar-alt mr-1"></i> ${date}
-                            </div>
-                            <h4 class="text-lg font-bold mb-2 text-gray-800 group-hover:text-blue-600 transition">${news.title}</h4>
-                            <p class="text-gray-600 text-sm line-clamp-3 mb-4">${news.content}</p>
-                            <span class="text-blue-600 text-sm font-semibold group-hover:underline">อ่านต่อ</span>
-                        </div>
-                    </article>
-                `;
-                
-                // ใส่การ์ดลงในเว็บ
-                newsContainer.innerHTML += newsCard;
-            });
-
-        } catch (error) {
-            console.error('Error loading news:', error);
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sarabun:wght@300;400;500&display=swap');
+        body { font-family: 'Sarabun', sans-serif; background-color: #F8FAFC; }
+        h1, h2, h3, .font-heading { font-family: 'Prompt', sans-serif; }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
-    }
-
-    // เรียกทำงานทันทีที่โหลดเว็บเสร็จ
-    document.addEventListener('DOMContentLoaded', loadNews);
-</script>
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Animated Gradient */
+        .gradient-bg {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating Animation */
+        .float { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+    </style>
 </head>
-<body class="bg-gray-50 flex flex-col min-h-screen">
+<body class="antialiased text-slate-800">
 
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <img src="https://www.rpk26.ac.th/images/logo.png" alt="Logo" class="h-12 w-12 object-contain" onerror="this.src='https://via.placeholder.com/50?text=Logo'">
+    <nav class="fixed w-full z-50 top-0 glass transition-all duration-300 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="https://www.rpk26.ac.th/images/logo.png" class="h-10 drop-shadow-md" onerror="this.src='https://via.placeholder.com/50'">
                 <div>
-                    <h1 class="text-lg md:text-xl font-bold text-blue-900 leading-tight">โรงเรียนราชประชานุเคราะห์ ๒๖</h1>
-                    <p class="text-xs text-gray-500">จังหวัดลำพูน</p>
+                    <h1 class="font-heading font-bold text-lg text-blue-900 leading-tight">RPK 26</h1>
+                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Lamphun</p>
                 </div>
             </div>
-            
-            <div class="hidden md:flex space-x-6 font-medium text-gray-700 items-center">
-                <a href="#" class="hover:text-blue-600 transition">หน้าแรก</a>
-                <a href="#" class="hover:text-blue-600 transition">ข้อมูลโรงเรียน</a>
-                <a href="#" class="hover:text-blue-600 transition">ข่าวสาร</a>
-                <a href="#" class="hover:text-blue-600 transition">บุคลากร</a>
-                <a href="admin.html" class="px-5 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-md transition transform hover:scale-105">
-                    เข้าสู่ระบบ
-                </a>
+            <div class="hidden md:flex items-center space-x-8 font-medium text-slate-600">
+                <a href="index.html" class="text-blue-600 font-bold">หน้าแรก</a>
+                <a href="about.html" class="hover:text-blue-600 transition">เกี่ยวกับเรา</a>
+                <a href="news.html" class="hover:text-blue-600 transition">ข่าวสาร</a>
+                <a href="personnel.html" class="hover:text-blue-600 transition">บุคลากร</a>
+                <a href="admin.html" class="px-6 py-2.5 bg-slate-900 text-white rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transition font-heading text-sm shadow-md">เข้าสู่ระบบ</a>
             </div>
-
-            <button class="md:hidden text-gray-600 focus:outline-none">
-                <i class="fas fa-bars fa-lg"></i>
-            </button>
         </div>
     </nav>
 
-    <header class="relative h-[400px] md:h-[500px] bg-gray-900 overflow-hidden">
-        <img src="https://www.rpk26.ac.th/images/slider/1.jpg" 
-             class="w-full h-full object-cover opacity-50 absolute inset-0" 
-             onerror="this.src='https://via.placeholder.com/1920x600?text=School+Banner'">
-             
-        <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4 z-10">
-            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-shadow animate-fade-in-up">ยินดีต้อนรับสู่รั้วราชประชาฯ</h2>
-            <p class="text-lg md:text-xl text-shadow max-w-2xl mx-auto">
-                สถานศึกษาแห่งการเรียนรู้ คู่คุณธรรม น้อมนำศาสตร์พระราชา
-            </p>
-            <a href="#news" class="mt-8 px-6 py-3 border-2 border-white text-white rounded-full hover:bg-white hover:text-gray-900 transition font-semibold">
-                เยี่ยมชมเว็บไซต์
-            </a>
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 z-0">
+            <img src="https://www.rpk26.ac.th/images/slider/1.jpg" class="w-full h-full object-cover scale-105 opacity-90" onerror="this.src='https://via.placeholder.com/1920x1080'">
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-blue-900/80 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8 animate-fade-in-up">
+                <div class="inline-block px-4 py-1.5 glass-dark rounded-full text-blue-200 text-xs font-bold tracking-wider border border-white/10">
+                    ✨ ยินดีต้อนรับสู่รั้วราชประชาฯ
+                </div>
+                <h1 class="text-5xl md:text-7xl font-heading font-extrabold text-white leading-tight drop-shadow-2xl">
+                    สร้างสรรค์ปัญญา <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-300">พัฒนาสู่อนาคต</span>
+                </h1>
+                <p class="text-lg text-slate-300 leading-relaxed max-w-lg">
+                    โรงเรียนราชประชานุเคราะห์ ๒๖ มุ่งมั่นสร้างโอกาสทางการศึกษา พัฒนาคุณภาพชีวิต น้อมนำศาสตร์พระราชา สู่ความเป็นสากล
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#news" class="px-8 py-4 bg-white text-blue-900 rounded-full font-bold hover:bg-blue-50 hover:scale-105 transition shadow-[0_0_20px_rgba(255,255,255,0.3)] text-center">
+                        ดูข่าวสารกิจกรรม
+                    </a>
+                    <a href="about.html" class="px-8 py-4 glass text-white rounded-full font-bold hover:bg-white/20 transition text-center border border-white/30">
+                        เกี่ยวกับโรงเรียน
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex justify-center relative float">
+                <div class="relative w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-3xl shadow-2xl">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-white text-2xl shadow-lg"><i class="fas fa-graduation-cap"></i></div>
+                        <div>
+                            <h3 class="text-white font-bold text-lg">เปิดรับสมัครนักเรียน</h3>
+                            <p class="text-blue-200 text-sm">ประจำปีการศึกษา 2569</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="h-2 bg-white/10 rounded-full overflow-hidden"><div class="h-full bg-blue-400 w-3/4"></div></div>
+                        <div class="flex justify-between text-xs text-blue-100"><p>โควต้าใกล้เต็มแล้ว</p><p>75%</p></div>
+                    </div>
+                    <button class="w-full mt-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition shadow-lg">สมัครเรียนออนไลน์</button>
+                </div>
+            </div>
         </div>
     </header>
 
-    <section id="news" class="container mx-auto px-4 py-16">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-8 border-b pb-4">
-            <div>
-                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 border-l-8 border-blue-600 pl-4">ข่าวประชาสัมพันธ์</h3>
-                <p class="text-gray-500 mt-2 pl-6">อัปเดตกิจกรรมและข่าวสารล่าสุดจากทางโรงเรียน</p>
+    <section id="news" class="py-24 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h4 class="text-blue-600 font-bold tracking-widest uppercase mb-2">News & Update</h4>
+                <h2 class="text-4xl font-heading font-bold text-slate-800">ข่าวสารและกิจกรรม</h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 mx-auto mt-4 rounded-full"></div>
             </div>
-            <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold mt-4 md:mt-0">ดูข่าวทั้งหมด <i class="fas fa-arrow-right ml-1"></i></a>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 card-zoom cursor-pointer group">
-                <div class="h-48 overflow-hidden relative">
-                    <img src="https://via.placeholder.com/400x250" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">กิจกรรม</div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center text-gray-400 text-xs mb-3">
-                        <i class="far fa-calendar-alt mr-1"></i> 10 ม.ค. 2569
-                    </div>
-                    <h4 class="text-lg font-bold mb-2 text-gray-800 group-hover:text-blue-600 transition">กิจกรรมวันเด็กแห่งชาติ 2569</h4>
-                    <p class="text-gray-600 text-sm line-clamp-3 mb-4">
-                        โรงเรียนราชประชานุเคราะห์ ๒๖ จัดกิจกรรมวันเด็กแห่งชาติ เพื่อส่งเสริมการเรียนรู้และความกล้าแสดงออกของนักเรียน...
-                    </p>
-                    <span class="text-blue-600 text-sm font-semibold group-hover:underline">อ่านต่อ</span>
-                </div>
-            </article>
-
-            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 card-zoom cursor-pointer group">
-                <div class="h-48 overflow-hidden relative">
-                    <img src="https://via.placeholder.com/400x250" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">วิชาการ</div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center text-gray-400 text-xs mb-3">
-                        <i class="far fa-calendar-alt mr-1"></i> 5 ม.ค. 2569
-                    </div>
-                    <h4 class="text-lg font-bold mb-2 text-gray-800 group-hover:text-green-600 transition">การแข่งขันทักษะวิชาการ</h4>
-                    <p class="text-gray-600 text-sm line-clamp-3 mb-4">
-                        ขอแสดงความยินดีกับนักเรียนตัวแทนโรงเรียน ที่ได้รับรางวัลเหรียญทองในการแข่งขันทักษะคอมพิวเตอร์...
-                    </p>
-                    <span class="text-green-600 text-sm font-semibold group-hover:underline">อ่านต่อ</span>
-                </div>
-            </article>
-
-            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 card-zoom cursor-pointer group">
-                <div class="h-48 overflow-hidden relative">
-                    <img src="https://via.placeholder.com/400x250" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute top-0 right-0 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">ประชาสัมพันธ์</div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center text-gray-400 text-xs mb-3">
-                        <i class="far fa-calendar-alt mr-1"></i> 25 ธ.ค. 2568
-                    </div>
-                    <h4 class="text-lg font-bold mb-2 text-gray-800 group-hover:text-orange-600 transition">ประกาศรับสมัครนักเรียนใหม่</h4>
-                    <p class="text-gray-600 text-sm line-clamp-3 mb-4">
-                        เปิดรับสมัครนักเรียนใหม่ ประจำปีการศึกษา 2569 ระดับชั้น ม.1 และ ม.4 ดูรายละเอียดและดาวน์โหลดใบสมัครได้ที่นี่...
-                    </p>
-                    <span class="text-orange-600 text-sm font-semibold group-hover:underline">อ่านต่อ</span>
-                </div>
-            </article>
+            <div id="news-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="col-span-full text-center py-20 text-slate-400"><i class="fas fa-circle-notch fa-spin fa-2x"></i> กำลังโหลด...</div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <a href="news.html" class="inline-flex items-center px-8 py-3 rounded-full border-2 border-slate-200 text-slate-600 font-bold hover:border-blue-600 hover:text-blue-600 transition group">
+                    ดูข่าวทั้งหมด <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition"></i>
+                </a>
+            </div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-gray-300 mt-auto">
-        <div class="container mx-auto px-4 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h4 class="text-white text-lg font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ติดต่อเรา</h4>
-                    <p class="mb-2"><i class="fas fa-map-marker-alt mr-2 text-blue-500"></i> อ.ป่าซาง จ.ลำพูน</p>
-                    <p class="mb-2"><i class="fas fa-phone mr-2 text-blue-500"></i> 053-XXX-XXX</p>
-                    <p class="mb-2"><i class="fas fa-envelope mr-2 text-blue-500"></i> admin@rpk26.ac.th</p>
-                </div>
-                <div>
-                    <h4 class="text-white text-lg font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ลิงก์ที่เกี่ยวข้อง</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white transition">ระบบดูแลช่วยเหลือนักเรียน</a></li>
-                        <li><a href="#" class="hover:text-white transition">ระบบบริหารจัดการผลการเรียน</a></li>
-                        <li><a href="#" class="hover:text-white transition">สพฐ.</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white text-lg font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ติดตามเรา</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white hover:bg-blue-700 transition"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white hover:bg-red-700 transition"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
+    <footer class="bg-slate-900 text-slate-300 py-16 border-t border-slate-800">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center gap-3 mb-8">
+                <img src="https://www.rpk26.ac.th/images/logo.png" class="h-12 grayscale brightness-200" onerror="this.src='https://via.placeholder.com/50'">
+                <h2 class="text-2xl font-heading font-bold text-white">RPK 26</h2>
             </div>
-        </div>
-        <div class="bg-black py-4 text-center text-sm text-gray-500">
-            &copy; 2026 RPK26 School. All rights reserved. Design by AI Assistant.
+            <div class="flex justify-center gap-8 mb-8 text-sm font-medium">
+                <a href="index.html" class="hover:text-blue-400 transition">หน้าแรก</a>
+                <a href="about.html" class="hover:text-blue-400 transition">เกี่ยวกับเรา</a>
+                <a href="news.html" class="hover:text-blue-400 transition">ข่าวสาร</a>
+                <a href="admin.html" class="hover:text-blue-400 transition">สำหรับเจ้าหน้าที่</a>
+            </div>
+            <p class="text-xs text-slate-600">&copy; 2026 RPK26 School. Designed for Education.</p>
         </div>
     </footer>
 
+    <script>
+        fetch('/api/news').then(r => r.json()).then(news => {
+            const grid = document.getElementById('news-grid');
+            if(news.length === 0) { grid.innerHTML = '<div class="col-span-full text-center text-slate-400">ไม่มีข่าว</div>'; return; }
+            grid.innerHTML = news.slice(0, 3).map(n => `
+                <article class="group bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col h-full hover:-translate-y-2 border border-slate-100">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="${n.image || 'https://via.placeholder.com/600x400'}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+                        <span class="absolute bottom-4 left-4 bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg">${n.category}</span>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col">
+                        <div class="text-xs text-slate-400 mb-3 flex items-center gap-2"><i class="far fa-calendar"></i> ${new Date(n.date).toLocaleDateString('th-TH')}</div>
+                        <h3 class="text-xl font-heading font-bold text-slate-800 mb-3 leading-snug group-hover:text-blue-600 transition">${n.title}</h3>
+                        <p class="text-slate-500 text-sm line-clamp-3 mb-6 flex-1">${n.content}</p>
+                        <a href="news.html" class="text-sm font-bold text-blue-600 flex items-center gap-1 group-hover:gap-2 transition-all">อ่านต่อ <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            `).join('');
+        });
+    </script>
 </body>
 </html>

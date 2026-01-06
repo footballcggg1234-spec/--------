@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>เกี่ยวกับเรา - RPK26</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style> @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sarabun:wght@300;400;500&display=swap'); body { font-family: 'Sarabun'; background-color: #F8FAFC; } .font-heading { font-family: 'Prompt'; } .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); }</style>
+</head>
+<body class="antialiased text-slate-800">
+    <nav class="fixed w-full z-50 top-0 glass shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3"><img src="https://www.rpk26.ac.th/images/logo.png" class="h-10" onerror="this.src='https://via.placeholder.com/50'"><h1 class="font-heading font-bold text-lg text-blue-900">RPK 26</h1></div>
+            <div class="hidden md:flex space-x-8 font-medium text-slate-600"><a href="index.html" class="hover:text-blue-600">หน้าแรก</a><a href="about.html" class="text-blue-600 font-bold">เกี่ยวกับเรา</a><a href="news.html" class="hover:text-blue-600">ข่าวสาร</a><a href="personnel.html" class="hover:text-blue-600">บุคลากร</a><a href="admin.html" class="px-6 py-2.5 bg-slate-900 text-white rounded-full hover:bg-blue-700 transition">เข้าสู่ระบบ</a></div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-32 bg-[#0F172A] relative overflow-hidden flex items-center justify-center">
+        <div class="absolute inset-0 opacity-40"><img src="https://www.rpk26.ac.th/images/slider/1.jpg" class="w-full h-full object-cover grayscale mix-blend-overlay"></div>
+        <div class="relative z-10 text-center text-white px-6">
+            <h5 class="text-blue-400 font-bold tracking-widest uppercase mb-4">About Us</h5>
+            <h1 class="text-5xl md:text-7xl font-heading font-bold mb-6">ประวัติและข้อมูลโรงเรียน</h1>
+            <p class="text-slate-300 text-lg max-w-2xl mx-auto">มุ่งมั่นพัฒนาผู้เรียนให้มีความรู้คู่คุณธรรม น้อมนำปรัชญาของเศรษฐกิจพอเพียง</p>
+        </div>
+    </header>
+
+    <section class="container mx-auto px-6 -mt-20 relative z-20 pb-20">
+        <div class="bg-white rounded-[3rem] shadow-2xl p-10 md:p-16 flex flex-col lg:flex-row gap-16 items-center">
+            <div class="lg:w-1/2 relative group">
+                <div class="absolute inset-0 bg-blue-600 rounded-[2rem] transform rotate-3 opacity-20 group-hover:rotate-6 transition"></div>
+                <img src="https://www.rpk26.ac.th/images/slider/1.jpg" class="relative rounded-[2rem] shadow-lg transform group-hover:scale-105 transition duration-500 w-full" onerror="this.src='https://via.placeholder.com/800x600'">
+            </div>
+            <div class="lg:w-1/2 space-y-8">
+                <div>
+                    <h3 class="text-3xl font-heading font-bold text-slate-800 mb-4">ความเป็นมา</h3>
+                    <p class="text-slate-600 leading-relaxed text-lg">โรงเรียนราชประชานุเคราะห์ ๒๖ จัดตั้งขึ้นเพื่อเฉลิมพระเกียรติพระบาทสมเด็จพระเจ้าอยู่หัว เนื่องในวโรกาสงานฉลองสิริราชสมบัติครบ 50 ปี มุ่งเน้นการให้โอกาสทางการศึกษา...</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100"><i class="fas fa-eye text-blue-600 text-2xl mb-3"></i><h4 class="font-bold text-lg mb-2">วิสัยทัศน์</h4><p class="text-slate-600 text-sm">พัฒนาผู้เรียนสู่มาตรฐานสากล</p></div>
+                    <div class="bg-purple-50 p-6 rounded-2xl border border-purple-100"><i class="fas fa-rocket text-purple-600 text-2xl mb-3"></i><h4 class="font-bold text-lg mb-2">พันธกิจ</h4><p class="text-slate-600 text-sm">ส่งเสริมคุณธรรมและวิชาการ</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
