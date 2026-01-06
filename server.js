@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // 🔗 เชื่อมต่อ MongoDB (เปลี่ยนลิ้งค์ตรงนี้เป็นของเครื่องคุณหรือ MongoDB Atlas)
-mongoose.connect('mongodb://localhost:27017/rpk26_school')
+mongoose.connect('mongodb+srv://footballcggg1234_db_user:rungraditnetsawang@schoolrpg26.50zttky.mongodb.net/?appName=schoolrpg26')
   .then(() => console.log('✅ Connected to MongoDB'))
   .catch(err => console.error('❌ Connection error:', err));
 
