@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โรงเรียนราชประชานุเคราะห์ ๒๖ จังหวัดลำพูน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+    // ฟังก์ชันดึงข่าวจาก API
+    async function loadNews() {
+        try {
+            const response = await fetch('http://localhost:3000/api/news');
+            const newsList = await response.json();
+            
+            const newsContainer = document.querySelector('.grid'); // หา container ของข่าว
+            
+            // ถ้ามีข่าว ให้เคลียร์ของเก่าออกก่อน
+            if(newsList.length > 0) {
+                newsContainer.innerHTML = ''; 
+            }
+
+            newsList.forEach(news => {
+                // แปลงวันที่ให้สวยงาม
+                const date = new Date(news.date).toLocaleDateString('th-TH', {
+                    year: 'numeric', month: 'short', day: 'numeric'
+                });
+
+                // สร้าง HTML ของการ์ดข่าว
+                const newsCard = `
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 card-zoom cursor-pointer group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="${news.image || 'https://via.placeholder.com/400x250'}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">${news.category}</div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-gray-400 text-xs mb-3">
+                                <i class="far fa-calendar-alt mr-1"></i> ${date}
+                            </div>
+                            <h4 class="text-lg font-bold mb-2 text-gray-800 group-hover:text-blue-600 transition">${news.title}</h4>
+                            <p class="text-gray-600 text-sm line-clamp-3 mb-4">${news.content}</p>
+                            <span class="text-blue-600 text-sm font-semibold group-hover:underline">อ่านต่อ</span>
+                        </div>
+                    </article>
+                `;
+                
+                // ใส่การ์ดลงในเว็บ
+                newsContainer.innerHTML += newsCard;
+            });
+
+        } catch (error) {
+            console.error('Error loading news:', error);
+        }
+    }
+
+    // เรียกทำงานทันทีที่โหลดเว็บเสร็จ
+    document.addEventListener('DOMContentLoaded', loadNews);
+</script>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="https://www.rpk26.ac.th/images/logo.png" alt="Logo" class="h-12 w-12 object-contain" onerror="this.src='https://via.placeholder.com/50?text=Logo'">
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold text-blue-900 leading-tight">โรงเรียนราชประชานุเคราะห์ ๒๖</h1>
+                    <p class="text-xs text-gray-500">จังหวัดลำพูน</p>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex space-x-6 font-medium text-gray-700 items-center">
+                <a href="#" class="hover:text-blue-600 transition">หน้าแรก</a>
+                <a href="#" class="hover:text-blue-600 transition">ข้อมูลโรงเรียน</a>
+                <a href="#" class="hover:text-blue-600 transition">ข่าวสาร</a>
+                <a href="#" class="hover:text-blue-600 transition">บุคลากร</a>
+                <a href="admin.html" class="px-5 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-md transition transform hover:scale-105">
+                    เข้าสู่ระบบ
+                </a>
+            </div>
+
+            <button class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars fa-lg"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="relative h-[400px] md:h-[500px] bg-gray-900 overflow-hidden">
+        <img src="https://www.rpk26.ac.th/images/slider/1.jpg" 
+             class="w-full h-full object-cover opacity-50 absolute inset-0" 
+             onerror="this.src='https://via.placeholder.com/1920x600?text=School+Banner'">
+             
+        <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4 z-10">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-shadow animate-fade-in-up">ยินดีต้อนรับสู่รั้วราชประชาฯ</h2>
+            <p class="text-lg md:text-xl text-shadow max-w-2xl mx-auto">
+                สถานศึกษาแห่งการเรียนรู้ คู่คุณธรรม น้อมนำศาสตร์พระราชา
+            </p>
+            <a href="#news" class="mt-8 px-6 py-3 border-2 border-white text-white rounded-full hover:bg-white hover:text-gray-900 transition font-semibold">
+                เยี่ยมชมเว็บไซต์
+            </a>
+        </div>
+    </header>
+
+    <section id="news" class="container mx-auto px-4 py-16">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-8 border-b pb-4">
+            <div>
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 border-l-8 border-blue-600 pl-4">ข่าวประชาสัมพันธ์</h3>
+                <p class="text-gray-500 mt-2 pl-6">อัปเดตกิจกรรมและข่าวสารล่าสุดจากทางโรงเรียน</p>
+            </div>
+            <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold mt-4 md:mt-0">ดูข่าวทั้งหมด <i class="fas fa-arrow-right ml-1"></i></a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 card-zoom cursor-pointer group">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="https://via.placeholder.com/400x250" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">กิจกรรม</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center text-gray-400 text-xs mb-3">
+                        <i class="far fa-calendar-alt mr-1"></i> 10 ม.ค. 2569
+                    </div>
+                    <h4 class="text-lg font-bold mb-2 text-gray-800 group-hover:text-blue-600 transition">กิจกรรมวันเด็กแห่งชาติ 2569</h4>
+                    <p class="text-gray-600 text-sm line-clamp-3 mb-4">
+                        โรงเรียนราชประชานุเคราะห์ ๒๖ จัดกิจกรรมวันเด็กแห่งชาติ เพื่อส่งเสริมการเรียนรู้และความกล้าแสดงออกของนักเรียน...
+                    </p>
+                    <span class="text-blue-600 text-sm font-semibold group-hover:underline">อ่านต่อ</span>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 card-zoom cursor-pointer group">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="https://via.placeholder.com/400x250" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">วิชาการ</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center text-gray-400 text-xs mb-3">
+                        <i class="far fa-calendar-alt mr-1"></i> 5 ม.ค. 2569
+                    </div>
+                    <h4 class="text-lg font-bold mb-2 text-gray-800 group-hover:text-green-600 transition">การแข่งขันทักษะวิชาการ</h4>
+                    <p class="text-gray-600 text-sm line-clamp-3 mb-4">
+                        ขอแสดงความยินดีกับนักเรียนตัวแทนโรงเรียน ที่ได้รับรางวัลเหรียญทองในการแข่งขันทักษะคอมพิวเตอร์...
+                    </p>
+                    <span class="text-green-600 text-sm font-semibold group-hover:underline">อ่านต่อ</span>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 card-zoom cursor-pointer group">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="https://via.placeholder.com/400x250" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute top-0 right-0 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">ประชาสัมพันธ์</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center text-gray-400 text-xs mb-3">
+                        <i class="far fa-calendar-alt mr-1"></i> 25 ธ.ค. 2568
+                    </div>
+                    <h4 class="text-lg font-bold mb-2 text-gray-800 group-hover:text-orange-600 transition">ประกาศรับสมัครนักเรียนใหม่</h4>
+                    <p class="text-gray-600 text-sm line-clamp-3 mb-4">
+                        เปิดรับสมัครนักเรียนใหม่ ประจำปีการศึกษา 2569 ระดับชั้น ม.1 และ ม.4 ดูรายละเอียดและดาวน์โหลดใบสมัครได้ที่นี่...
+                    </p>
+                    <span class="text-orange-600 text-sm font-semibold group-hover:underline">อ่านต่อ</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-300 mt-auto">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ติดต่อเรา</h4>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt mr-2 text-blue-500"></i> อ.ป่าซาง จ.ลำพูน</p>
+                    <p class="mb-2"><i class="fas fa-phone mr-2 text-blue-500"></i> 053-XXX-XXX</p>
+                    <p class="mb-2"><i class="fas fa-envelope mr-2 text-blue-500"></i> admin@rpk26.ac.th</p>
+                </div>
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ลิงก์ที่เกี่ยวข้อง</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">ระบบดูแลช่วยเหลือนักเรียน</a></li>
+                        <li><a href="#" class="hover:text-white transition">ระบบบริหารจัดการผลการเรียน</a></li>
+                        <li><a href="#" class="hover:text-white transition">สพฐ.</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ติดตามเรา</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white hover:bg-blue-700 transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white hover:bg-red-700 transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-black py-4 text-center text-sm text-gray-500">
+            &copy; 2026 RPK26 School. All rights reserved. Design by AI Assistant.
+        </div>
+    </footer>
+
+</body>
+</html>
