@@ -2,23 +2,35 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path'); // <--- เพิ่มตัวนี้มาช่วยหาไฟล์
+
 const News = require('./models/News');
 
 const app = express();
-// แก้ไข: ใช้ PORT ของ Server หรือถ้าไม่มีให้ใช้ 3000
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// แก้ไข: ใช้ลิ้งค์จาก Environment Variable หรือถ้าไม่มีให้ใช้ Localhost
+// ----------------------------------------------------
+// ✅ ส่วนที่เพิ่ม: บอก Server ว่าไฟล์ HTML/CSS อยู่ที่ไหน
+// ----------------------------------------------------
+app.use(express.static(path.join(__dirname, '/')));
+
+// ถ้าคนเข้าหน้าแรก (/) ให้ส่งไฟล์ index.html ไปให้ดู
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+// ----------------------------------------------------
+
+// เชื่อมต่อ MongoDB (รองรับทั้งออนไลน์และในเครื่อง)
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://footballcggg1234_db_user:rungraditnetsawang@schoolrpg26.50zttky.mongodb.net/?appName=schoolrpg26';
 
 mongoose.connect(MONGODB_URI)
   .then(() => console.log('✅ Connected to MongoDB'))
   .catch(err => console.error('❌ Connection error:', err));
 
-// ... (ส่วน API Routes ด้านล่างเหมือนเดิม ไม่ต้องแก้) ...
+// ================= API Routes (เหมือนเดิม) =================
 
 app.get('/api/news', async (req, res) => {
     try {
